@@ -3,6 +3,6 @@ from . import views
 
 
 urlpatterns = [
-    path('leo', views.leo),
-    path('scorpio', views.scorpio),
+    path('<int:sign>', views.sign_number),
+    path('<str:sign>', views.sign_name),
 ]
