@@ -1,4 +1,5 @@
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
+from django.urls import reverse
 
 days_week = {'monday': 'Купить хлеб',
              'tuesday': 'Помыть машину',
@@ -17,5 +18,6 @@ def days_number(request, day):
     if day > len(list(days_week)):
         return HttpResponseNotFound(f'Нет такого дня недели {day}')
     need_day = list(days_week)[day-1]
-    return HttpResponseRedirect(need_day)
+    redirect_url = reverse('dw-name', args=[need_day])
+    return HttpResponseRedirect(redirect_url)
 
