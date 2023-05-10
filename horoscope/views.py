@@ -23,6 +23,20 @@ elements_dict = {
     'water': ['cancer', 'scorpio', 'pisces'],
 }
 
+date_dict = {
+    1: [('capricorn', 1, 20), ('aquarius', 21, 31)],
+    2: [('aquarius', 1, 19), ('pisces', 20, 28)],
+    3: [('pisces', 1, 20), ('aries', 21, 31)],
+    4: [('aries', 1, 20), ('taurus', 21, 30)],
+    5: [('taurus', 1, 21), ('gemini', 22, 31)],
+    6: [('gemini', 1, 21), ('cancer', 22, 30)],
+    7: [('cancer', 1, 22), ('leo', 23, 31)],
+    8: [('leo', 1, 21), ('virgo', 22, 31)],
+    9: [('virgo', 1, 23), ('libra', 24, 30)],
+    10: [('libra', 1, 23), ('scorpio', 24, 31)],
+    11: [('scorpio', 1, 22), ('sagittarius', 23, 30)],
+    12: [('sagittarius', 1, 22), ('capricorn', 23, 31)],
+}
 
 def elements(request):
     temp_res = ''
@@ -46,10 +60,21 @@ def sign_number(request, sign: int):
     if sign > len(list(sign_zodiac)):
         return HttpResponseNotFound(f'Нет такого знака задиака {sign}')
     zodiacs = list(sign_zodiac)[sign - 1]
-    return HttpResponseRedirect(zodiacs)
+    redirect_url = reverse('horoscope-name', args=[zodiacs])
+    return HttpResponseRedirect(redirect_url)
 
 
 def sign_name(request, sign: str):
     if sign in list(sign_zodiac):
         return HttpResponse(f'знак зодиака {sign_zodiac[sign]}')
     return HttpResponseNotFound(f'Нет такого знака задиака {sign}')
+
+
+def get_info_by_date(request, month, day):
+    if month not in date_dict:
+        return HttpResponse(f'Нет такого месяца {month}')
+    sign1, sign2, = date_dict[month]
+    match days_sign:
+            case
+
+
