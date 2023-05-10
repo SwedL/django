@@ -24,18 +24,18 @@ elements_dict = {
 }
 
 date_dict = {
-    1: [('capricorn', 1, 20), ('aquarius', 21, 31)],
-    2: [('aquarius', 1, 19), ('pisces', 20, 28)],
-    3: [('pisces', 1, 20), ('aries', 21, 31)],
-    4: [('aries', 1, 20), ('taurus', 21, 30)],
-    5: [('taurus', 1, 21), ('gemini', 22, 31)],
-    6: [('gemini', 1, 21), ('cancer', 22, 30)],
-    7: [('cancer', 1, 22), ('leo', 23, 31)],
-    8: [('leo', 1, 21), ('virgo', 22, 31)],
-    9: [('virgo', 1, 23), ('libra', 24, 30)],
-    10: [('libra', 1, 23), ('scorpio', 24, 31)],
-    11: [('scorpio', 1, 22), ('sagittarius', 23, 30)],
-    12: [('sagittarius', 1, 22), ('capricorn', 23, 31)],
+    1: ['январь', ('capricorn', 1, 20), ('aquarius', 21, 31)],
+    2: ['февраль', ('aquarius', 1, 19), ('pisces', 20, 28)],
+    3: ['март', ('pisces', 1, 20), ('aries', 21, 31)],
+    4: ['апрель', ('aries', 1, 20), ('taurus', 21, 30)],
+    5: ['май', ('taurus', 1, 21), ('gemini', 22, 31)],
+    6: ['июнь', ('gemini', 1, 21), ('cancer', 22, 30)],
+    7: ['июль', ('cancer', 1, 22), ('leo', 23, 31)],
+    8: ['август', ('leo', 1, 21), ('virgo', 22, 31)],
+    9: ['сентябрь', ('virgo', 1, 23), ('libra', 24, 30)],
+    10: ['октябрь', ('libra', 1, 23), ('scorpio', 24, 31)],
+    11: ['ноябрь', ('scorpio', 1, 22), ('sagittarius', 23, 30)],
+    12: ['декабрь', ('sagittarius', 1, 22), ('capricorn', 23, 31)],
 }
 
 def elements(request):
@@ -71,10 +71,20 @@ def sign_name(request, sign: str):
 
 
 def get_info_by_date(request, month, day):
-    if month not in date_dict:
-        return HttpResponse(f'Нет такого месяца {month}')
-    sign1, sign2, = date_dict[month]
-    match days_sign:
-            case
+    if month in date_dict:
+        name_month, sign1, sign2, = date_dict[month]
+        match sign2:
+            case name_sign, start_day, end_day if start_day <= day <= end_day:
+                redirect_url = reverse('horoscope-name', args=[name_sign])
+                return HttpResponseRedirect(redirect_url)
+        match sign1:
+            case name_sign, start_day, end_day if start_day <= day <= end_day:
+                redirect_url = reverse('horoscope-name', args=[name_sign])
+                return HttpResponseRedirect(redirect_url)
+            case _:
+                return HttpResponse(f'Нет такого дня {day} в месяце {name_month}')
+    return HttpResponse(f'Нет такого месяца {month}')
+
+
 
 
