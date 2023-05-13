@@ -1,3 +1,4 @@
+from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
 from django.urls import reverse
 
@@ -8,6 +9,10 @@ days_week = {'monday': 'Купить хлеб',
              'friday': 'Постирать бельё',
              'saturday': 'Посмотреть кино',
              'sunday': 'Выспаться'}
+
+
+def index_info(request):
+    return render(request, 'week_days/greeting.html')
 
 def days_name(request, day):
     if day in list(days_week):

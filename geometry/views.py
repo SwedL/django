@@ -3,13 +3,16 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 
 def get_rectangle_area(request, width: int, length: int):
-    return HttpResponse(f'Площадь прямоугольника размером {width}x{length} равна {width * length}')
+    return render(request, 'geometry/rectangle.html')
+    #return HttpResponse(f'Площадь прямоугольника размером {width}x{length} равна {width * length}')
 
 def get_square_area(request, width: int):
-    return HttpResponse(f'Площадь квадрата размером {width}x{width} равна {width ** 2}')
+    return render(request, 'geometry/square.html')
+    #return HttpResponse(f'Площадь квадрата размером {width}x{width} равна {width ** 2}')
 
 def get_circle_area(request, radius: int):
-    return HttpResponse(f'Площадь круга радиуса {radius} равна {3.14 * radius ** 2}')
+    return render(request, 'geometry/circle.html')
+    #return HttpResponse(f'Площадь круга радиуса {radius} равна {3.14 * radius ** 2}')
 
 def redirect_to_figure_rectangle(request, **kwargs):
     redirect_url = reverse('rectangle', args=[*kwargs.values()])
