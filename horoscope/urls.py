@@ -3,6 +3,7 @@ from . import views
 
 
 urlpatterns = [
+    path('', views.index_info, name='horoscope-index'),
     path('type', views.elements),
     path('type/<str:element>', views.element, name='horoscope-elements'),
     path('<int:month>/<int:day>', views.get_info_by_date),
