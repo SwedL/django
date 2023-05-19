@@ -2,7 +2,7 @@ from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
 from django.urls import reverse
 from django.shortcuts import render
 
-sign_zodiac = {
+zodiac_dict = {
     "aries": "Овен - первый знак зодиака, планета Марс (с 21 марта по 20 апреля).",
     "taurus": "Телец - второй знак зодиака, планета Венера (с 21 апреля по 21 мая).",
     "gemini": "Близнецы - третий знак зодиака, планета Меркурий (с 22 мая по 21 июня).",
@@ -58,19 +58,22 @@ def element(request, element: str):
 
 
 def sign_number(request, sign: int):
-    if sign > len(list(sign_zodiac)):
+    if sign > len(list(zodiac_dict)):
         return HttpResponseNotFound(f'Нет такого знака задиака {sign}')
-    zodiacs = list(sign_zodiac)[sign - 1]
+    zodiacs = list(zodiac_dict)[sign - 1]
     redirect_url = reverse('horoscope-name', args=[zodiacs])
     return HttpResponseRedirect(redirect_url)
 
 
-def sign_name(request, sign: str):
-    # if sign in list(sign_zodiac):
-    #     return HttpResponse(f'знак зодиака {sign_zodiac[sign]}')
+def sign_name(request, sign_zodiac: str):
+    description = zodiac_dict.get(sign_zodiac)
+    zodiacs = list(zodiac_dict)
+    sign_name = description.split()[0]
     context = {
-        'sign': sign,
-        'description': sign_zodiac[sign],
+        'description': description,
+        'sign': sign_zodiac,
+        'zodiacs': zodiacs,
+        'sign_name': sign_name
     }
     return render(request, 'horoscope/info_zodiac.html', context=context)
 
@@ -91,7 +94,7 @@ def get_info_by_date(request, month, day):
     return HttpResponse(f'Нет такого месяца {month}')
 
 def index_info(request):
-    sign_zodiac_lst = list(sign_zodiac)
+    sign_zodiac = list(zodiac_dict)
     context = {
         'zodiacs': sign_zodiac
     }

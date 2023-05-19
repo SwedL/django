@@ -3,20 +3,20 @@
 {% load static %}
 
 {% block css_additional %}
-<link rel="stylesheet" href=" {% static 'horoscope/css/index.css' %}">
+<link rel="stylesheet" href="{% static 'horoscope/css/index.css' %}">
 {% endblock %}
 
 {% block title %}
     Base HTML
 {% endblock %}
 
-{% block content%}
-    <h1>Base HTML</h1>
-    {% include 'horoscope/include/navbar.html' %}
-    <h2>Content from index.html</h2>
-    {% for zodiac in zodiacs %}
+{% block content %}
+    <h1>Приложение Гороскоп</h1>
+    <ul>
+        {% for zodiac in zodiacs %}
         <li><a href="{% url 'horoscope-name' zodiac %}">{{ zodiac|title}}</a></li>
-    {% endfor %}
+        {% endfor %}
+    </ul>
 {% endblock %}
 
 
